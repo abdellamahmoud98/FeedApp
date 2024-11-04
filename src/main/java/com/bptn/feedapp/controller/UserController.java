@@ -16,31 +16,16 @@ public class UserController {
 
 	
 
-final Logger logger = LoggerFactory.getLogger(this.getClass());
+	final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-
-
+	@GetMapping("/test")
 	public String testController() {
-
-
+	
 		logger.debug("The testController() method was invoked!");
-		
+
 		return "The FeedApp application is up and running";
 
 		
 		
-	//	@GetMapping("/test")
-	//	public String testController() {
-			
-			
-		}
-
-/*	@GetMapping("/")
-	String testController() {
-		System.out.println("Hello World");
-		
-		return "Hello World";
-	}*/
-
+	}
 }
-//}
