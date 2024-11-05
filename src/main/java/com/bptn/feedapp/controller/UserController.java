@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bptn.feedapp.jdbc.UserBean;
+import com.bptn.feedapp.jpa.User;
 import com.bptn.feedapp.service.UserService;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
@@ -26,7 +28,7 @@ public class UserController {
 
 	// Add listUsers method to get all the existing Users in the database:
 	@GetMapping("/")
-	public List<UserBean> listUsers() {
+	public List<User> listUsers() {
 
 		logger.debug("The listUsers() method was invoked!");
 		return this.userService.listUsers();
@@ -36,7 +38,7 @@ public class UserController {
 	// mapping and sets them as method parameters:
 	// Add findByUsername method to get an existing User from the database:
 	@GetMapping("/{username}")
-	public UserBean findByUsername(@PathVariable String username) {
+	public Optional<User> findByUsername(@PathVariable String username) {
 
 		logger.debug("The findByUsername() method was invoked!, username={}", username);
 		return this.userService.findByUsername(username);
@@ -47,8 +49,8 @@ public class UserController {
 	public String createUser(@PathVariable String first, @PathVariable String last, @PathVariable String username,
 			@PathVariable String password, @PathVariable String phone, @PathVariable String emailId) {
 
-		UserBean user = new UserBean();
-
+		User user = new User();
+		
 		user.setFirstName(first);
 		user.setLastName(last);
 		user.setUsername(username);
