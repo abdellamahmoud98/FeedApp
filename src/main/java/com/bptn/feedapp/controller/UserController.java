@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bptn.feedapp.jdbc.UserBean;
 import com.bptn.feedapp.jpa.User;
 import com.bptn.feedapp.service.UserService;
 import java.util.Optional;
@@ -26,6 +25,13 @@ public class UserController {
 	@Autowired
 	UserService userService;
 
+	@GetMapping("/test")
+	public String testController() {
+		logger.debug("The testController() method was invoked!");
+		System.out.println("Hello World");		
+		return "The FeedApp application is up and running";
+	}
+	
 	// Add listUsers method to get all the existing Users in the database:
 	@GetMapping("/")
 	public List<User> listUsers() {
@@ -49,6 +55,8 @@ public class UserController {
 	public String createUser(@PathVariable String first, @PathVariable String last, @PathVariable String username,
 			@PathVariable String password, @PathVariable String phone, @PathVariable String emailId) {
 
+		
+		
 		User user = new User();
 		
 		user.setFirstName(first);
