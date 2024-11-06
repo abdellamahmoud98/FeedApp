@@ -1,7 +1,7 @@
 package com.bptn.feedapp.jpa;
 
 import java.io.Serializable;
-import java.security.Timestamp;
+import java.sql.Timestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -42,6 +42,7 @@ public class FeedMetaData implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="\"actionUserId\"")
 	private User user;
+	
 	
 	public FeedMetaData() {
 		
