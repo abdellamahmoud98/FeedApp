@@ -87,3 +87,21 @@ spring:
   spring:
     profiles:
       active: name_of_active_profile
+
+# Jackson Settings
+jackson:
+time-zone: America/Toronto
+date-format: "yyyy-MM-dd HH:mm:ss"      
+# Email Settings
+mail:
+  username: feedapp.06@gmail.com
+  password: pg123pg123
+  host: smtp.gmail.com
+  port: 587
+  protocol: smtp
+  properties:
+    mail:
+     smtp:
+       auth: true
+       starttls:
+          enable: true
