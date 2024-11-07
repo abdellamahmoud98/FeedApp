@@ -10,7 +10,7 @@ logging:
       
 spring:
   application:
-    name: feedApp-06
+    name: feedApp
 
 # Active Profile
   profiles:
@@ -25,6 +25,20 @@ spring:
   jackson:
     time-zone: America/Toronto
     date-format: "yyyy-MM-dd HH:mm:ss" 
+
+# Email Settings
+  mail:
+    username: feedapp.06@gmail.com
+    password: ljwk seem tamf jvlw
+    host: smtp.gmail.com
+    port: 587
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
     
 # Common Database Settings
   sql:
@@ -60,48 +74,14 @@ spring:
       maximum-pool-size: 2
   jpa:
     hibernate:
-      ddl-auto: validate     	
-#"test": profile only 
---- 
+      ddl-auto: validate   
 
-spring:
-  config:
-    activate:
-      on-profile: test
-
-  datasource: 
-    url: jdbc:postgresql://localhost:5432/feedApp 
-    username: tester 
-#"production" profile only 
---- 
-
-spring:
- config:
-  activate:
-   on-profile: prod
-
-  datasource: 
-   url: jdbc:postgresql://192.168.200.109:5432/feedApp 
-   username: admin  
       
-  spring:
-    profiles:
-      active: name_of_active_profile
+      
 
-# Jackson Settings
-jackson:
-time-zone: America/Toronto
-date-format: "yyyy-MM-dd HH:mm:ss"      
-# Email Settings
-mail:
-  username: feedapp.06@gmail.com
-  password: pg123pg123
-  host: smtp.gmail.com
-  port: 587
-  protocol: smtp
-  properties:
-    mail:
-     smtp:
-       auth: true
-       starttls:
-          enable: true
+
+
+
+
+
+

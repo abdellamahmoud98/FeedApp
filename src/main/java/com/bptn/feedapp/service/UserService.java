@@ -1,59 +1,48 @@
 package com.bptn.feedapp.service;
 
-import java.util.Optional;
-import com.bptn.feedapp.repository.UserRepository;
-import org.springframework.stereotype.Service;
-
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.bptn.feedapp.jdbc.UserBean;
-import com.bptn.feedapp.jdbc.UserDao;
+import org.springframework.stereotype.Service;
 import com.bptn.feedapp.jpa.User;
-import com.bptn.feedapp.jdbc.UserBean;
-
+import com.bptn.feedapp.repository.UserRepository;
 
 @Service
 public class UserService {
 	
-	    
-	@Autowired
-	EmailService emailService;
-	
-	@Autowired
-	UserDao userDao;
 	
 	@Autowired
 	UserRepository userRepository;
 	
+	@Autowired
+	EmailService emailService;
+	
 	
 	public List<User> listUsers() {
 		return this.userRepository.findAll();
-		}
+		
+	}
 	
 	
-	public Optional<User> findByUsername(String username) {
+	public Optional<User> findUserByUsername(String username) {
 		return this.userRepository.findByUsername(username);
-		}
+		
+	}
 	
 	
 	public void createUser(User user) {
 		this.userRepository.save(user);
-		}
-	
+	}
 	
 	public User signup(User user){
 		user.setUsername(user.getUsername().toLowerCase());
 		user.setEmailId(user.getEmailId().toLowerCase());
-		
-		this.userRepository.save(user);
-	    
-		this.emailService.sendVerificationEmail(user);
-		
 		user.setEmailVerified(false);
 		user.setCreatedOn(Timestamp.from(Instant.now()));
 		this.userRepository.save(user);
+		this.emailService.sendVerificationEmail(user);
 		return user;
 	}
 	

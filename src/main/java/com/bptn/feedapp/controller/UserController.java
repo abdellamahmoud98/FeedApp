@@ -2,7 +2,6 @@ package com.bptn.feedapp.controller;
 
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bptn.feedapp.jpa.User;
 import com.bptn.feedapp.service.UserService;
+
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -46,12 +47,12 @@ public class UserController {
 	// mapping and sets them as method parameters:
 	// Add findByUsername method to get an existing User from the database:
 	@GetMapping("/{username}")
-	public Optional<User> findByUsername(@PathVariable String username) {
-
+	public Optional<User> findByUsername(@PathVariable   String username) {
 		logger.debug("The findByUsername() method was invoked!, username={}", username);
-		return this.userService.findByUsername(username);
+		return this.userService.findUserByUsername(username);
 	}
-
+	
+	
 	// Add createUser method to create a User in the database:
 	@GetMapping("/{first}/{last}/{username}/{password}/{phone}/{emailId}")
 	public String createUser(@PathVariable String first, @PathVariable String last, @PathVariable String username,
