@@ -16,12 +16,17 @@ import com.bptn.feedapp.jdbc.UserBean;
 
 @Service
 public class UserService {
-
+	
+	    
+	@Autowired
+	EmailService emailService;
 	
 	@Autowired
 	UserDao userDao;
+	
 	@Autowired
 	UserRepository userRepository;
+	
 	
 	public List<User> listUsers() {
 		return this.userRepository.findAll();
@@ -41,6 +46,10 @@ public class UserService {
 	public User signup(User user){
 		user.setUsername(user.getUsername().toLowerCase());
 		user.setEmailId(user.getEmailId().toLowerCase());
+		
+		this.userRepository.save(user);
+	    
+		this.emailService.sendVerificationEmail(user);
 		
 		user.setEmailVerified(false);
 		user.setCreatedOn(Timestamp.from(Instant.now()));
