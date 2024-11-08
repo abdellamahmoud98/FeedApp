@@ -22,31 +22,31 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="\"Feed\"")
 public class Feed implements Serializable {
-	private static final long serialVersionUID = 1L; 
-	
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="\"feedId\"")
 	private Integer feedId;
-	
+
 	@Column(columnDefinition="TEXT")
 	private String picture;
-	
+
 	private String content;
-	
+
 	@Column(name="\"createdOn\"")
 	private Timestamp createdOn;
-	
+
 	@ManyToOne
 	@JoinColumn(name="\"userId\"")
 	private User user;
-	
+
 	@JsonInclude(Include.NON_NULL)
 	@OneToMany(mappedBy="feed", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private List<FeedMetaData> feedMetaData;
-	
-	
-	public Feed() { 
+
+
+	public Feed() {
 	}
 
 
@@ -115,7 +115,7 @@ public class Feed implements Serializable {
 		return String.format("Feed [feedId=%s, picture=%s, content=%s, createdOn=%s, user=%s, feedMetaData=%s]", feedId,
 				picture, content, createdOn, user, feedMetaData);
 	}
-	
-	
-	
+
+
+
 }
