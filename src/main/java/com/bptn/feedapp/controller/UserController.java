@@ -31,10 +31,10 @@ public class UserController {
 	@GetMapping("/test")
 	public String testController() {
 		logger.debug("The testController() method was invoked!");
-		System.out.println("Hello World");		
+		System.out.println("Hello World");
 		return "The FeedApp application is up and running";
 	}
-	
+
 	// Add listUsers method to get all the existing Users in the database:
 	@GetMapping("/")
 	public List<User> listUsers() {
@@ -51,17 +51,17 @@ public class UserController {
 		logger.debug("The findByUsername() method was invoked!, username={}", username);
 		return this.userService.findUserByUsername(username);
 	}
-	
-	
+
+
 	// Add createUser method to create a User in the database:
 	@GetMapping("/{first}/{last}/{username}/{password}/{phone}/{emailId}")
 	public String createUser(@PathVariable String first, @PathVariable String last, @PathVariable String username,
 			@PathVariable String password, @PathVariable String phone, @PathVariable String emailId) {
 
-		
-		
+
+
 		User user = new User();
-		
+
 		user.setFirstName(first);
 		user.setLastName(last);
 		user.setUsername(username);
@@ -77,12 +77,21 @@ public class UserController {
 
 		return "User Created Successfully";
 	}
-	
+
 	@PostMapping("/signup")
-	public User signup(@RequestBody User user) {  
+	public User signup(@RequestBody User user) {
 		logger.debug("Signing up, username: {}", user.getUsername());
 		return this.userService.signup(user);
-		
-	}		
+
+	}
+	
+	@GetMapping("/verify/email")
+	public void verifyEmail() {
+		 logger.debug("Verifying Email");
+
+
+		    this.userService.verifyEmail();
+
+	}
 	}
 
