@@ -28,7 +28,6 @@ import org.springframework.http.HttpHeaders;
 @Service
 public class UserService {
 
-
 	@Autowired
 	UserRepository userRepository;
 
@@ -52,79 +51,83 @@ public class UserService {
 
 	}
 
-
 	public Optional<User> findUserByUsername(String username) {
 		return this.userRepository.findByUsername(username);
 
 	}
 
-
 	public void createUser(User user) {
 		this.userRepository.save(user);
 	}
+
 	public User signup(User user) {
 
-		 user.setUsername(user.getUsername().toLowerCase());
-		 user.setEmailId(user.getEmailId().toLowerCase());
+		user.setUsername(user.getUsername().toLowerCase());
+		user.setEmailId(user.getEmailId().toLowerCase());
 
-		 this.validateUsernameAndEmail(user.getUsername(), user.getEmailId());
+		this.validateUsernameAndEmail(user.getUsername(), user.getEmailId());
 
-		 user.setEmailVerified(false);
-		 user.setCreatedOn(Timestamp.from(Instant.now()));
+		user.setEmailVerified(false);
+		user.setPassword(this.passwordEncoder.encode(user.getPassword()));
+		user.setCreatedOn(Timestamp.from(Instant.now()));
 
-		    this.userRepository.save(user);
+		this.userRepository.save(user);
 
-		 this.emailService.sendVerificationEmail(user);
+		this.emailService.sendVerificationEmail(user);
 
-		 return user;
-		}
-
+		return user;
+	}
 
 	private void validateUsernameAndEmail(String username, String emailId) {
 
-        this.userRepository.findByUsername(username).ifPresent(u -> {
-            throw new UsernameExistException(String.format("Username already exists, %s", u.getUsername()));
-        });
+		this.userRepository.findByUsername(username).ifPresent(u -> {
+			throw new UsernameExistException(String.format("Username already exists, %s", u.getUsername()));
+		});
 
-        this.userRepository.findByEmailId(emailId).ifPresent(u -> {
-            throw new EmailExistException(String.format("Email already exists, %s", u.getEmailId()));
-        });
+		this.userRepository.findByEmailId(emailId).ifPresent(u -> {
+			throw new EmailExistException(String.format("Email already exists, %s", u.getEmailId()));
+		});
 
-}
+	}
+
 	public void verifyEmail() {
 
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        User user = this.userRepository.findByUsername(username)
-                .orElseThrow(() -> new UserNotFoundException(String.format("Username doesn't exist, %s", username)));
+		User user = this.userRepository.findByUsername(username)
+				.orElseThrow(() -> new UserNotFoundException(String.format("Username doesn't exist, %s", username)));
 
-        user.setEmailVerified(true);
+		user.setEmailVerified(true);
 
-        this.userRepository.save(user);
-}
+		this.userRepository.save(user);
+	}
+
 	private static User isEmailVerified(User user) {
 
-		  if (user.getEmailVerified().equals(false)) {
-		        throw new EmailNotVerifiedException(String.format("Email requires verification, %s", user.getEmailId()));
-		    }
-
-		    return user;
+		if (user.getEmailVerified().equals(false)) {
+			throw new EmailNotVerifiedException(String.format("Email requires verification, %s", user.getEmailId()));
 		}
+
+		return user;
+	}
+
 	private Authentication authenticate(String username, String password) {
-        return this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-}
+		return this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+	}
+
 	public User authenticate(User user) {
 
-		 /* Spring Security Authentication. */
-		 this.authenticate(user.getUsername(), user.getPassword());
+		/* Spring Security Authentication. */
+		this.authenticate(user.getUsername(), user.getPassword());
 
-		 /* Get User from the DB. */
-		 return this.userRepository.findByUsername(user.getUsername()).map(UserService::isEmailVerified).get();
-		}
+		/* Get User from the DB. */
+		return this.userRepository.findByUsername(user.getUsername()).map(UserService::isEmailVerified).get();
+	}
+
 	public HttpHeaders generateJwtHeader(String username) {
-	    HttpHeaders headers = new HttpHeaders();
-	    headers.add(AUTHORIZATION, this.jwtService.generateJwtToken(username,this.provider.getJwtExpiration()));
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(AUTHORIZATION, this.jwtService.generateJwtToken(username, this.provider.getJwtExpiration()));
 
-	    return headers;
+		return headers;
 	}
 }
