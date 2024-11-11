@@ -33,6 +33,15 @@ public class UserController {
 	@Autowired
 	UserService userService;
 
+
+	@GetMapping("/reset/{emailId}")
+	public void sendResetPasswordEmail(@PathVariable String emailId) {
+
+	        logger.debug("Sending Reset Password Email, emailId: {}", emailId);
+
+	        this.userService.sendResetPasswordEmail(emailId);
+	}
+
 	@GetMapping("/test")
 	public String testController() {
 		logger.debug("The testController() method was invoked!");
@@ -89,7 +98,7 @@ public class UserController {
 		return this.userService.signup(user);
 
 	}
-	
+
 	@GetMapping("/verify/email")
 	public void verifyEmail() {
 		 logger.debug("Verifying Email");
@@ -98,20 +107,20 @@ public class UserController {
 		    this.userService.verifyEmail();
 
 	}
-	
+
 	@PostMapping("/login")
 	public ResponseEntity<User> login(@RequestBody User user) {
-	    
+
 	    logger.debug("Authenticating, username: {}, password: {}", user.getUsername(), user.getPassword());
-	        
+
 	    /* Spring Security Authentication. */
 	    user = this.userService.authenticate(user);
 
 	    /* Generate JWT and HTTP Header */
 	    HttpHeaders jwtHeader = this.userService.generateJwtHeader(user.getUsername());
-	                
+
 	    logger.debug("User Authenticated, username: {}", user.getUsername());
-	        
+
 	    return new ResponseEntity<>(user, jwtHeader, OK);
 	}
 	}
