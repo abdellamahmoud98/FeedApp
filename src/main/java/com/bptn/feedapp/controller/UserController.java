@@ -131,6 +131,13 @@ public class UserController {
 
 	    return new ResponseEntity<>(user, jwtHeader, OK);
 	}
+	@GetMapping("/get")
+	public User getUser() {
+
+	 logger.debug("Getting User Data");
+
+	 return this.userService.getUser();
+	}
 	}
 
 
