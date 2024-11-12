@@ -162,3 +162,4 @@ public class UserService {
 	.orElseThrow(() -> new UserNotFoundException(String.format("Username doesn't exist, %s",username)));
 	}
 }
+
