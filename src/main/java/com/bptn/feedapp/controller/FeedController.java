@@ -1,6 +1,7 @@
 package com.bptn.feedapp.controller;
 
 import org.slf4j.Logger;
+
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,6 +17,8 @@ import com.bptn.feedapp.service.FeedService;
 
 import com.bptn.feedapp.domain.PageResponse;
 import com.bptn.feedapp.jpa.FeedMetaData;
+import org.springframework.web.bind.annotation.DeleteMapping;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/feeds")
@@ -59,5 +62,12 @@ public class FeedController {
 	    logger.debug("Creating FeedMetaData, feedId: {}", feedId);
 
 	    return this.feedService.createFeedMetaData(feedId, meta);
+	}
+	@DeleteMapping("/{feedId}")
+	public void deleteFeed(@PathVariable int feedId) {
+
+	    logger.debug("Deleting Feed, feedId: {}", feedId);
+
+	    this.feedService.deleteFeed(feedId);
 	}
 }
