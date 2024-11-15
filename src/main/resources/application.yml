@@ -96,9 +96,9 @@ spring:
  jpa:
     hibernate:
       ddl-auto: validate      
-      
+---
 # Test Profile
- spring:
+spring:
   config:
     activate.on-profile: test 
 # Database Settings
@@ -115,12 +115,10 @@ spring:
     defer-datasource-initialization: true
     database-platform: org.hibernate.dialect.H2Dialect	
 
-    h2:
+  h2:
       console:
         enabled: true
         path: /h2-console
         settings:
            trace: false
            web-allow-others: true
-
- 
