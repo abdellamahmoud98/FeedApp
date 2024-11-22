@@ -16,3 +16,9 @@ public interface FeedRepository extends JpaRepository<Feed,Integer>, PagingAndSo
 	Page<Feed> findByUserNot(User user, Pageable pageable);
 	
 }
+//CRUD:
+
+// spring 
+
+// Hibernate 
+

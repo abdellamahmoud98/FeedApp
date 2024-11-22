@@ -1,6 +1,5 @@
 package com.bptn.feedapp.jdbc;
 
-
 import java.sql.Timestamp;
 
 public class UserBean {
