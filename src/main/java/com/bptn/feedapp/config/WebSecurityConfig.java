@@ -34,6 +34,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
+	
 	@Autowired
 	ResourceProvider provider;
 	 
@@ -91,20 +92,8 @@ SecurityFilterChain securityFilterChain(HttpSecurity http, MvcRequestMatcher.Bui
           .cors(withDefaults())
           .csrf((csrf) -> csrf.disable());
         
-        return http.build();
-       
-        
+        return http.build();      
         
 }
 
-
-
 }
-
-
-
-
-
-
-
-

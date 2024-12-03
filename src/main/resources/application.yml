@@ -28,8 +28,8 @@ spring:
 
 # Email Settings
   mail:
-    username: feedapp.06@gmail.com
-    password: ljwksetmtamfjvlw
+    username: gt.gbaragbo@gmail.com
+    password: uqqq xxjc csqn bwid
     host: smtp.gmail.com
     port: 587
     protocol: smtp
@@ -67,7 +67,7 @@ spring:
        
 # Database Settings
   datasource:
-    url: jdbc:postgresql://localhost:5432/feedApp
+    url: jdbc:postgresql://localhost:5432/feedAppModal
     username: postgres
     password: pg123
     hikari:
@@ -88,7 +88,7 @@ spring:
 
 # Database Settings 
  datasource:
-   url: jdbc:postgresql://localhost:5432/feedApp
+   url: jdbc:postgresql://localhost:5432/feedAppModal
    username: postgres
    password: pg123
    hikari:

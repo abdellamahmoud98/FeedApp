@@ -22,7 +22,7 @@ client:
       expiration: 86_400_000 # 24 hours
     reset: 
       param: user/resetPassword
-      expiration: 86_400_000 # 24 hours 
+      expiration: 0 # 24 hours 86_400_000
 
 # H2 Server Configuration 
 h2.server:
